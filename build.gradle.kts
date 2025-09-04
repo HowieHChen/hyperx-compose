@@ -25,23 +25,19 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_21.toString()
+    kotlin {
+        jvmToolchain(21)
     }
 }
 
 @Suppress("UseTomlInstead")
 dependencies {
-    api("top.yukonga.miuix.kmp:miuix:0.5.0")
+    api("top.yukonga.miuix.kmp:miuix:0.5.1")
     api("dev.chrisbanes.haze:haze:1.6.10")
     api("androidx.compose.foundation:foundation:1.9.0")
     api("androidx.activity:activity-compose:1.10.1")
     api("androidx.navigation:navigation-compose:2.9.3")
-    api("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2")
+    api("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.3")
     implementation("io.github.biezhi:TinyPinyin:2.0.3.RELEASE")
     implementation("io.coil-kt.coil3:coil-compose:3.3.0")
 }

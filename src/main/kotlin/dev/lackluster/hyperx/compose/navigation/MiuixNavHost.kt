@@ -50,7 +50,7 @@ import kotlin.jvm.JvmSuppressWildcards
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 import kotlinx.coroutines.launch
-import top.yukonga.miuix.kmp.utils.SmoothRoundedCornerShape
+import top.yukonga.miuix.kmp.utils.G2RoundedCornerShape
 
 /**
  * Provides a place in the Compose hierarchy for self contained navigation to occur.
@@ -499,8 +499,7 @@ fun MiuixNavHost(
         }
 
         val clipShape = remember(cornerRadius) {
-            SmoothRoundedCornerShape(
-                smoothing = 0.8f,
+            G2RoundedCornerShape(
                 topStart = cornerRadius,
                 topEnd = cornerRadius,
                 bottomEnd = cornerRadius,

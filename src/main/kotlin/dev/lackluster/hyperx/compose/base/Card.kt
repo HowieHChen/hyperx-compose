@@ -21,7 +21,7 @@ import dev.lackluster.hyperx.compose.theme.DisabledAlpha
 import dev.lackluster.hyperx.compose.theme.contentColorFor
 import top.yukonga.miuix.kmp.basic.Surface
 import top.yukonga.miuix.kmp.theme.MiuixTheme
-import top.yukonga.miuix.kmp.utils.SmoothRoundedCornerShape
+import top.yukonga.miuix.kmp.utils.G2RoundedCornerShape
 
 /**
  * Cards contain contain content and actions that relate information about a subject. Filled cards
@@ -113,7 +113,7 @@ object CardDefaults {
     // shape Defaults
     /** Default shape for a card. */
     val shape: Shape
-        @Composable get() = SmoothRoundedCornerShape(16.dp)
+        @Composable get() = G2RoundedCornerShape(16.dp)
 
     val contentPaddingZero: PaddingValues = PaddingValues.Zero
 

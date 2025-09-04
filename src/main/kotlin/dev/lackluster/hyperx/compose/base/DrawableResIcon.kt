@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import top.yukonga.miuix.kmp.utils.SmoothRoundedCornerShape
+import top.yukonga.miuix.kmp.utils.G2RoundedCornerShape
 
 data class ImageIcon(
     val iconVector: ImageVector? = null,
@@ -39,7 +39,7 @@ data class ImageIcon(
     ) : this(iconVector, iconRes, iconBitmap, IconSize.Unspecified, iconSize, cornerRadius)
 
     fun getSize(): Dp {
-        return when(iconSize) {
+        return when (iconSize) {
             IconSize.Small -> 28.dp
             IconSize.Medium -> 38.dp
             IconSize.Large -> 44.dp
@@ -48,8 +48,9 @@ data class ImageIcon(
             IconSize.Unspecified -> iconSizeDp
         }
     }
+
     fun getHorizontalPadding(): Dp {
-        return when(iconSize) {
+        return when (iconSize) {
             IconSize.Small -> 16.dp
             IconSize.Medium -> 11.dp
             IconSize.Large -> 8.dp
@@ -83,7 +84,7 @@ fun DrawableResIcon(
             if (iconCornerRadius != Dp.Unspecified)
                 Modifier.clip(
                     if (iconCornerRadius >= iconSizeDp / 2) CircleShape
-                    else SmoothRoundedCornerShape(iconCornerRadius)
+                    else G2RoundedCornerShape(iconCornerRadius)
                 )
             else
                 Modifier
