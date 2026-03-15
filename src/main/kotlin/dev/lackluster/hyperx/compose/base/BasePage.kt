@@ -74,6 +74,7 @@ fun BasePage(
         }
     },
     actions: @Composable RowScope.(padding: PaddingValues) -> Unit = {},
+    fixedContent: (@Composable () -> Unit)? = null,
     content: LazyListScope.() -> Unit
 ) {
     val topAppBarBackground = MiuixTheme.colorScheme.background
@@ -86,10 +87,12 @@ fun BasePage(
                     (listState.isScrollInProgress || listState.firstVisibleItemIndex > 0 || listState.firstVisibleItemScrollOffset > 12)
         }
     }
-    val topBarBlurTintAlpha = remember { mutableFloatStateOf(
-        if (topAppBarBackground.luminance() >= 0.5f) blurTintAlphaLight.floatValue
-        else blurTintAlphaDark.floatValue
-    ) }
+    val topBarBlurTintAlpha = remember {
+        mutableFloatStateOf(
+            if (topAppBarBackground.luminance() >= 0.5f) blurTintAlphaLight.floatValue
+            else blurTintAlphaDark.floatValue
+        )
+    }
     val layoutDirection = LocalLayoutDirection.current
     val systemBarInsets = WindowInsets.systemBars.add(WindowInsets.displayCutout).only(WindowInsetsSides.Horizontal).asPaddingValues()
     val navigationIconPadding = PaddingValues.Absolute(
@@ -124,6 +127,10 @@ fun BasePage(
             )
         ),
         adjustPadding = adjustPadding,
+        fixedBackgroundColor = topAppBarBackground.copy(
+            if (topBarBlurState) 0f else 1f
+        ),
+        fixedContent = fixedContent
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
