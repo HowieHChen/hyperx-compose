@@ -1,6 +1,8 @@
 package dev.lackluster.hyperx.compose.base
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -20,6 +22,7 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.HazeTint
@@ -121,8 +124,13 @@ fun HazeScaffold(
                 } else {
                     Modifier
                 }
+                    .zIndex(1f)
                     .background(fixedBackgroundColor)
                     .padding(top = contentPadding.calculateTopPadding())
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    ) {} // Prevent penetration clicks
                     .onSizeChanged { size ->
                         if (fixedContentHeightPx != size.height) {
                             fixedContentHeightPx = size.height
