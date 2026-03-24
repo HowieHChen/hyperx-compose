@@ -14,8 +14,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import dev.lackluster.hyperx.compose.base.BasePage
+import dev.lackluster.hyperx.compose.navigation.Navigator
 import dev.lackluster.hyperx.compose.base.BasePageDefaults
 import dev.lackluster.hyperx.compose.icon.ImmersionClose
 import dev.lackluster.hyperx.compose.icon.ImmersionConfirm
@@ -26,7 +26,7 @@ import top.yukonga.miuix.kmp.theme.MiuixTheme
 
 @Composable
 fun FullScreenDialog(
-    navController: NavController,
+    navigator: Navigator,
     adjustPadding: PaddingValues,
     title: String,
     blurEnabled: MutableState<Boolean> = mutableStateOf(true),
@@ -34,10 +34,10 @@ fun FullScreenDialog(
     blurTintAlphaDark: MutableFloatState = mutableFloatStateOf(0.7f),
     mode: BasePageDefaults.Mode = BasePageDefaults.Mode.FULL,
     onNegativeButton: (() -> Unit)? = {
-        navController.popBackStack()
+        navigator.pop()
     },
     onPositiveButton: (() -> Unit)? = {
-        navController.popBackStack()
+        navigator.pop()
     },
     content: LazyListScope.() -> Unit
 ) {
@@ -49,7 +49,7 @@ fun FullScreenDialog(
     }
 
     BasePage(
-        navController = navController,
+        navigator = navigator,
         adjustPadding = adjustPadding,
         title = title,
         blurEnabled = blurEnabled,
