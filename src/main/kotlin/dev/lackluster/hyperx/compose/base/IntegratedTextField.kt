@@ -57,20 +57,20 @@ fun IntegratedTextField(
         cursorBrush = SolidColor(MiuixTheme.colorScheme.primary),
         interactionSource = interaction,
         decorationBox =
-        @Composable { innerTextField ->
-            Box(
-                modifier = Modifier.padding(insideMargin),
-                contentAlignment = Alignment.CenterEnd
-            ) {
-                Text(
-                    text = if (text.isEmpty()) hint else "",
-                    color = RightActionDefaults.rightActionColors().color(enabled),
-                    textAlign = TextAlign.End,
-                    softWrap = false,
-                    maxLines = 1
-                )
-                innerTextField()
+            @Composable { innerTextField ->
+                Box(
+                    modifier = Modifier.padding(insideMargin),
+                    contentAlignment = Alignment.CenterEnd
+                ) {
+                    Text(
+                        text = if (text.isEmpty()) hint else "",
+                        color = RightActionDefaults.rightActionColors().color(enabled),
+                        textAlign = TextAlign.End,
+                        softWrap = false,
+                        maxLines = 1
+                    )
+                    innerTextField()
+                }
             }
-        }
     )
 }

@@ -12,7 +12,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import androidx.navigation.compose.composable
-import kotlin.jvm.JvmSuppressWildcards
 import kotlinx.coroutines.flow.StateFlow
 
 /**
@@ -21,7 +20,7 @@ import kotlinx.coroutines.flow.StateFlow
  * [composable].
  */
 @Navigator.Name(MiuixNavigator.NAME)
-class MiuixNavigator constructor() : Navigator<MiuixNavigator.Destination>() {
+class MiuixNavigator : Navigator<MiuixNavigator.Destination>() {
 
     /** Get the map of transitions currently in progress from the [state]. */
     internal val transitionsInProgress
@@ -81,7 +80,7 @@ class MiuixNavigator constructor() : Navigator<MiuixNavigator.Destination>() {
         navigator: MiuixNavigator,
         internal val content:
         @Composable
-        AnimatedContentScope.(@JvmSuppressWildcards NavBackStackEntry, ) -> Unit
+        AnimatedContentScope.(@JvmSuppressWildcards NavBackStackEntry) -> Unit
     ) : NavDestination(navigator) {
 
         @Deprecated(

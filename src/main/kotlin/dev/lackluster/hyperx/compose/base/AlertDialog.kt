@@ -30,44 +30,45 @@ fun AlertDialog(
 ) {
     val hapticFeedback = LocalHapticFeedback.current
     SuperDialog(
+        show = visibility.value,
         title = title,
         summary = message,
-        show = visibility,
         onDismissRequest = {
             if (cancelable) {
                 visibility.value = false
             }
+        },
+        content = {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                if (mode != AlertDialogMode.Positive) {
+                    TextButton(
+                        modifier = Modifier.weight(1f),
+                        text = negativeText,
+                        onClick = {
+                            hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
+                            onNegativeButton?.let { it1 -> it1() } ?: visibility.apply { value = false }
+                        }
+                    )
+                }
+                if (mode == AlertDialogMode.NegativeAndPositive) {
+                    Spacer(Modifier.width(20.dp))
+                }
+                if (mode != AlertDialogMode.Negative) {
+                    TextButton(
+                        modifier = Modifier.weight(1f),
+                        text = positiveText,
+                        colors = ButtonDefaults.textButtonColorsPrimary(),
+                        onClick = {
+                            hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
+                            onPositiveButton?.let { it1 -> it1() } ?: visibility.apply { value = false }
+                        }
+                    )
+                }
+            }
         }
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            if (mode != AlertDialogMode.Positive) {
-                TextButton(
-                    modifier = Modifier.weight(1f),
-                    text = negativeText,
-                    onClick = {
-                        hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
-                        onNegativeButton?.let { it1 -> it1() } ?: visibility.apply { value = false }
-                    }
-                )
-            }
-            if (mode == AlertDialogMode.NegativeAndPositive) {
-                Spacer(Modifier.width(20.dp))
-            }
-            if (mode != AlertDialogMode.Negative) {
-                TextButton(
-                    modifier = Modifier.weight(1f),
-                    text = positiveText,
-                    colors = ButtonDefaults.textButtonColorsPrimary(),
-                    onClick = {
-                        hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
-                        onPositiveButton?.let { it1 -> it1() } ?: visibility.apply { value = false }
-                    }
-                )
-            }
-        }
-    }
+    )
 }
 
 enum class AlertDialogMode {

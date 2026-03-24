@@ -10,14 +10,11 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import dev.lackluster.hyperx.compose.activity.SafeSP
-import dev.lackluster.hyperx.compose.base.ImageIcon
 import dev.lackluster.hyperx.compose.base.DrawableResIcon
-import top.yukonga.miuix.kmp.basic.BasicComponent
+import dev.lackluster.hyperx.compose.base.ImageIcon
 import top.yukonga.miuix.kmp.basic.BasicComponentColors
 import top.yukonga.miuix.kmp.basic.BasicComponentDefaults
-import top.yukonga.miuix.kmp.basic.Switch
-import top.yukonga.miuix.kmp.basic.SwitchColors
-import top.yukonga.miuix.kmp.basic.SwitchDefaults
+import top.yukonga.miuix.kmp.extra.SuperSwitch
 
 @Composable
 fun SwitchPreference(
@@ -29,45 +26,28 @@ fun SwitchPreference(
     enabled: Boolean = true,
     titleColor: BasicComponentColors = BasicComponentDefaults.titleColor(),
     summaryColor: BasicComponentColors = BasicComponentDefaults.summaryColor(),
-    switchColors: SwitchColors = SwitchDefaults.switchColors(),
     onCheckedChange: ((Boolean) -> Unit)? = null,
 ) {
-    var spValue by remember { mutableStateOf(
-        key?.let { SafeSP.getBoolean(it, defValue) } ?: defValue
-    ) }
+    var spValue by remember {
+        mutableStateOf(
+            key?.let { SafeSP.getBoolean(it, defValue) } ?: defValue
+        )
+    }
     val updatedOnCheckedChange by rememberUpdatedState(onCheckedChange)
 
-    BasicComponent(
-        insideMargin = PaddingValues((icon?.getHorizontalPadding() ?: 16.dp), 16.dp, 16.dp, 16.dp),
+    SuperSwitch(
+        checked = spValue,
+        onCheckedChange = { newValue ->
+            spValue = newValue
+            key?.let { SafeSP.putAny(it, newValue) }
+            updatedOnCheckedChange?.invoke(newValue)
+        },
         title = title,
         titleColor = titleColor,
         summary = summary,
         summaryColor = summaryColor,
-        leftAction = {
-            icon?.let {
-                DrawableResIcon(it)
-            }
-        },
-        rightActions = {
-            Switch(
-                checked = spValue,
-                onCheckedChange = { newValue ->
-                    spValue = !spValue
-                    key?.let { SafeSP.putAny(it, newValue) }
-                    updatedOnCheckedChange?.invoke(newValue)
-                },
-                enabled = enabled,
-                colors = switchColors
-            )
-        },
-        onClick = {
-            if (enabled) {
-                spValue = !spValue
-                key?.let { SafeSP.putAny(it, spValue) }
-                updatedOnCheckedChange?.invoke(spValue)
-            }
-        },
-        enabled = enabled
+        startAction = icon?.let { { DrawableResIcon(it) } },
+        enabled = enabled,
     )
 }
 
@@ -82,7 +62,6 @@ fun SwitchPreference(
     checked: MutableState<Boolean>,
     titleColor: BasicComponentColors = BasicComponentDefaults.titleColor(),
     summaryColor: BasicComponentColors = BasicComponentDefaults.summaryColor(),
-    switchColors: SwitchColors = SwitchDefaults.switchColors(),
     onCheckedChange: ((Boolean) -> Unit)? = null,
 ) {
     key?.let {
@@ -90,35 +69,18 @@ fun SwitchPreference(
     }
     val updatedOnCheckedChange by rememberUpdatedState(onCheckedChange)
 
-    BasicComponent(
-        insideMargin = PaddingValues((icon?.getHorizontalPadding() ?: 16.dp), 16.dp, 16.dp, 16.dp),
+    SuperSwitch(
+        checked = checked.value,
+        onCheckedChange = { newValue ->
+            checked.value = newValue
+            key?.let { SafeSP.putAny(it, newValue) }
+            updatedOnCheckedChange?.invoke(newValue)
+        },
         title = title,
         titleColor = titleColor,
         summary = summary,
         summaryColor = summaryColor,
-        leftAction = {
-            icon?.let {
-                DrawableResIcon(it)
-            }
-        },
-        rightActions = {
-            Switch(
-                checked = checked.value,
-                onCheckedChange = { newValue ->
-                    key?.let { SafeSP.putAny(it, newValue) }
-                    updatedOnCheckedChange?.invoke(newValue)
-                },
-                enabled = enabled,
-                colors = switchColors
-            )
-        },
-        onClick = {
-            if (enabled) {
-                checked.value = !checked.value
-                key?.let { SafeSP.putAny(it, checked.value) }
-                updatedOnCheckedChange?.invoke(checked.value)
-            }
-        },
-        enabled = enabled
+        startAction = icon?.let { { DrawableResIcon(it) } },
+        enabled = enabled,
     )
 }

@@ -40,7 +40,8 @@ android {
 
 @Suppress("UseTomlInstead")
 dependencies {
-    api("top.yukonga.miuix.kmp:miuix:0.5.2")
+    api("top.yukonga.miuix.kmp:miuix:0.8.8")
+    api("top.yukonga.miuix.kmp:miuix-icons:0.8.8")
     api("dev.chrisbanes.haze:haze:1.7.2")
     api("androidx.compose.foundation:foundation:1.10.5")
     api("androidx.activity:activity-compose:1.13.0")

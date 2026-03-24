@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import top.yukonga.miuix.kmp.basic.Surface
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.theme.MiuixTheme
-import top.yukonga.miuix.kmp.utils.G2RoundedCornerShape
+import top.yukonga.miuix.kmp.theme.miuixShape
 
 @Composable
 fun TabRow(
@@ -38,7 +37,7 @@ fun TabRow(
     onTabSelected: ((Int) -> Unit)? = null,
 ) {
     val currentOnTabSelected by rememberUpdatedState(onTabSelected)
-    val shape = remember(cornerRadius) { G2RoundedCornerShape(cornerRadius) }
+    val shape = miuixShape(cornerRadius)
 
     Row(
         modifier = modifier
@@ -94,7 +93,7 @@ object TabRowDefaults {
      */
     @Composable
     fun tabRowColors(
-        backgroundColor: Color = MiuixTheme.colorScheme.background,
+        backgroundColor: Color = MiuixTheme.colorScheme.surface,
         contentColor: Color = MiuixTheme.colorScheme.onSurfaceVariantSummary,
         selectedBackgroundColor: Color = MiuixTheme.colorScheme.surface,
         selectedContentColor: Color = MiuixTheme.colorScheme.onSurface

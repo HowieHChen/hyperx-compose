@@ -27,7 +27,7 @@ import top.yukonga.miuix.kmp.theme.MiuixTheme
 
 @Composable
 fun Hint(
-    modifier: Modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+    modifier: Modifier = Modifier,
     text: String,
     foregroundColor: Color = colorResource(R.color.hyperx_hint_fg),
     backgroundColor: Color = colorResource(R.color.hyperx_hint_bg),
@@ -42,6 +42,7 @@ fun Hint(
     ) {
         Row(
             modifier = Modifier
+                .padding(horizontal = 12.dp, vertical = 6.dp)
                 .heightIn(min = 60.dp)
                 .padding(contentPadding)
                 .fillMaxWidth(),

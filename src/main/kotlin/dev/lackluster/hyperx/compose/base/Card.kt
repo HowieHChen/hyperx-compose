@@ -22,10 +22,10 @@ import dev.lackluster.hyperx.compose.theme.DisabledAlpha
 import dev.lackluster.hyperx.compose.theme.contentColorFor
 import top.yukonga.miuix.kmp.basic.Surface
 import top.yukonga.miuix.kmp.theme.MiuixTheme
-import top.yukonga.miuix.kmp.utils.G2RoundedCornerShape
+import top.yukonga.miuix.kmp.theme.miuixShape
 
 /**
- * Cards contain contain content and actions that relate information about a subject. Filled cards
+ * Cards contain content and actions that relate information about a subject. Filled cards
  * provide subtle separation from the background. This has less emphasis than elevated or outlined
  * cards.
  *
@@ -60,7 +60,7 @@ fun Card(
 }
 
 /**
- * Cards contain contain content and actions that relate information about a subject. Filled cards
+ * Cards contain content and actions that relate information about a subject. Filled cards
  * provide subtle separation from the background. This has less emphasis than elevated or outlined
  * cards.
  *
@@ -114,7 +114,7 @@ object CardDefaults {
     // shape Defaults
     /** Default shape for a card. */
     val shape: Shape
-        @Composable get() = G2RoundedCornerShape(16.dp)
+        @Composable get() = miuixShape(16.dp)
 
     val contentPaddingZero: PaddingValues = PaddingValues.Zero
 
@@ -124,20 +124,21 @@ object CardDefaults {
      * Creates a [CardColors] that represents the default container and content colors used in a
      * [Card].
      */
-    @Composable fun cardColors(): CardColors {
+    @Composable
+    fun cardColors(): CardColors {
         val isDark = isSystemInDarkTheme()
         return if (isDark) {
             defaultCardColorsDarkCached
         } else {
             defaultCardColorsLightCached
         } ?: CardColors(
-            containerColor = MiuixTheme.colorScheme.surface,
-            contentColor = contentColorFor(MiuixTheme.colorScheme.surface),
-            disabledContainerColor = MiuixTheme.colorScheme.surface
+            containerColor = MiuixTheme.colorScheme.background,
+            contentColor = contentColorFor(MiuixTheme.colorScheme.background),
+            disabledContainerColor = MiuixTheme.colorScheme.background
                 .copy(alpha = DisabledAlpha)
-                .compositeOver(MiuixTheme.colorScheme.surface),
+                .compositeOver(MiuixTheme.colorScheme.background),
             disabledContentColor =
-                contentColorFor(MiuixTheme.colorScheme.surface)
+                contentColorFor(MiuixTheme.colorScheme.background)
                     .copy(DisabledAlpha),
         ).also {
             if (isDark) {
@@ -187,8 +188,7 @@ object CardDefaults {
  * - See [CardDefaults.cardColors] for the default colors used in a [Card].
  */
 @Immutable
-class CardColors
-constructor(
+class CardColors(
     val containerColor: Color,
     val contentColor: Color,
     val disabledContainerColor: Color,

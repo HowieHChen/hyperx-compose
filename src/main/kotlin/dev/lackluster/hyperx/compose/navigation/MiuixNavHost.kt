@@ -45,12 +45,11 @@ import androidx.navigation.compose.LocalOwnersProvider
 import androidx.navigation.createGraph
 import androidx.navigation.get
 import dev.lackluster.hyperx.compose.animation.NavTransitionEasing
+import kotlinx.coroutines.launch
+import top.yukonga.miuix.kmp.theme.miuixShape
 import kotlin.coroutines.cancellation.CancellationException
-import kotlin.jvm.JvmSuppressWildcards
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
-import kotlinx.coroutines.launch
-import top.yukonga.miuix.kmp.utils.G2RoundedCornerShape
 
 /**
  * Provides a place in the Compose hierarchy for self contained navigation to occur.
@@ -82,32 +81,32 @@ fun MiuixNavHost(
     cornerRadius: Dp = 0.dp,
     route: String? = null,
     enterTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
         {
             miuixEnterTransition()
         },
     exitTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
         {
             miuixExitTransition()
         },
     popEnterTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
         {
             miuixPopEnterTransition()
         },
     popExitTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
         {
             miuixPopExitTransition()
         },
     sizeTransform:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> SizeTransform?)? =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> SizeTransform?)? =
         null,
     builder: NavGraphBuilder.() -> Unit
 ) {
@@ -160,32 +159,32 @@ fun MiuixNavHost(
     route: KClass<*>? = null,
     typeMap: Map<KType, @JvmSuppressWildcards NavType<*>> = emptyMap(),
     enterTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
         {
             miuixEnterTransition()
         },
     exitTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
         {
             miuixExitTransition()
         },
     popEnterTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
         {
             miuixPopEnterTransition()
         },
     popExitTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
         {
             miuixPopExitTransition()
         },
     sizeTransform:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> SizeTransform?)? =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> SizeTransform?)? =
         null,
     builder: NavGraphBuilder.() -> Unit
 ) {
@@ -238,32 +237,32 @@ fun MiuixNavHost(
     route: KClass<*>? = null,
     typeMap: Map<KType, @JvmSuppressWildcards NavType<*>> = emptyMap(),
     enterTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
         {
             miuixEnterTransition()
         },
     exitTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
         {
             miuixExitTransition()
         },
     popEnterTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
         {
             miuixPopEnterTransition()
         },
     popExitTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
         {
             miuixPopExitTransition()
         },
     sizeTransform:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> SizeTransform?)? =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> SizeTransform?)? =
         null,
     builder: NavGraphBuilder.() -> Unit
 ) {
@@ -307,32 +306,32 @@ fun MiuixNavHost(
     contentAlignment: Alignment = Alignment.TopStart,
     cornerRadius: Dp = 0.dp,
     enterTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
         {
             miuixEnterTransition()
         },
     exitTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
         {
             miuixExitTransition()
         },
     popEnterTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
         {
             miuixPopEnterTransition()
         },
     popExitTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
         {
             miuixPopExitTransition()
         },
     sizeTransform:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> SizeTransform?)? =
+    (@JvmSuppressWildcards
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> SizeTransform?)? =
         null
 ) {
 
@@ -498,14 +497,7 @@ fun MiuixNavHost(
             }
         }
 
-        val clipShape = remember(cornerRadius) {
-            G2RoundedCornerShape(
-                topStart = cornerRadius,
-                topEnd = cornerRadius,
-                bottomEnd = cornerRadius,
-                bottomStart = cornerRadius,
-            )
-        }
+        val clipShape = miuixShape(cornerRadius)
 
         transition.AnimatedContent(
             modifier,
@@ -557,12 +549,14 @@ fun MiuixNavHost(
             // ViewModelStoreOwner and LifecycleOwner
 
             currentEntry?.LocalOwnersProvider(saveableStateHolder) {
-                val needClip by remember { derivedStateOf {
-                    this.transition.isRunning && (
-                            composeNavigator.isPop.value && this.transition.targetState == EnterExitState.PostExit ||
-                            !composeNavigator.isPop.value && this.transition.targetState == EnterExitState.Visible
-                            )
-                } }
+                val needClip by remember {
+                    derivedStateOf {
+                        this.transition.isRunning && (
+                                composeNavigator.isPop.value && this.transition.targetState == EnterExitState.PostExit ||
+                                        !composeNavigator.isPop.value && this.transition.targetState == EnterExitState.Visible
+                                )
+                    }
+                }
                 Box(
                     modifier =
                         if (needClip) Modifier.clip(clipShape)

@@ -1,6 +1,5 @@
 package dev.lackluster.hyperx.compose.base
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
@@ -8,41 +7,35 @@ import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.displayCutout
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableFloatState
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.basic.rememberTopAppBarState
 import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.icons.useful.Back
+import top.yukonga.miuix.kmp.icon.extended.Back
 import top.yukonga.miuix.kmp.theme.MiuixTheme
-import top.yukonga.miuix.kmp.utils.getWindowSize
 import top.yukonga.miuix.kmp.utils.overScrollVertical
 import top.yukonga.miuix.kmp.utils.scrollEndHaptic
 
@@ -52,9 +45,9 @@ fun BasePage(
     adjustPadding: PaddingValues,
     title: String,
     blurEnabled: MutableState<Boolean> = mutableStateOf(true),
-    blurTintAlphaLight: MutableFloatState = mutableFloatStateOf(0.6f),
-    blurTintAlphaDark: MutableFloatState = mutableFloatStateOf(0.5f),
     mode: BasePageDefaults.Mode = BasePageDefaults.Mode.FULL,
+    blurTintAlphaLight: MutableFloatState = mutableFloatStateOf(0.8f),
+    blurTintAlphaDark: MutableFloatState = mutableFloatStateOf(0.7f),
     navigationIcon: @Composable (padding: PaddingValues) -> Unit = { padding ->
         IconButton(
             modifier = Modifier
@@ -67,7 +60,7 @@ fun BasePage(
         ) {
             Icon(
                 modifier = Modifier.size(26.dp),
-                imageVector = MiuixIcons.Useful.Back,
+                imageVector = MiuixIcons.Back,
                 contentDescription = "Back",
                 tint = MiuixTheme.colorScheme.onSurfaceSecondary
             )
@@ -77,22 +70,9 @@ fun BasePage(
     fixedContent: (@Composable () -> Unit)? = null,
     content: LazyListScope.() -> Unit
 ) {
-    val topAppBarBackground = MiuixTheme.colorScheme.background
     val scrollBehavior = MiuixScrollBehavior(rememberTopAppBarState())
     val listState = rememberLazyListState()
-    val topBarBlurState by remember {
-        derivedStateOf {
-            blurEnabled.value &&
-                    scrollBehavior.state.collapsedFraction >= 1.0f &&
-                    (listState.isScrollInProgress || listState.firstVisibleItemIndex > 0 || listState.firstVisibleItemScrollOffset > 12)
-        }
-    }
-    val topBarBlurTintAlpha = remember {
-        mutableFloatStateOf(
-            if (topAppBarBackground.luminance() >= 0.5f) blurTintAlphaLight.floatValue
-            else blurTintAlphaDark.floatValue
-        )
-    }
+
     val layoutDirection = LocalLayoutDirection.current
     val systemBarInsets = WindowInsets.systemBars.add(WindowInsets.displayCutout).only(WindowInsetsSides.Horizontal).asPaddingValues()
     val navigationIconPadding = PaddingValues.Absolute(
@@ -105,11 +85,7 @@ fun BasePage(
         modifier = Modifier.fillMaxSize(),
         topBar = { contentPadding ->
             TopAppBar(
-                modifier = Modifier
-                    .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Top)),
-                color = topAppBarBackground.copy(
-                    if (topBarBlurState) 0f else 1f
-                ),
+                color = if (blurEnabled.value) Color.Transparent else MiuixTheme.colorScheme.surface,
                 title = title,
                 scrollBehavior = scrollBehavior,
                 navigationIcon = { navigationIcon.invoke(navigationIconPadding) },
@@ -119,29 +95,19 @@ fun BasePage(
             )
         },
         blurTopBar = blurEnabled.value,
-        hazeStyle = HazeStyle(
-            blurRadius = 66.dp,
-            backgroundColor = topAppBarBackground,
-            tint = HazeTint(
-                topAppBarBackground.copy(alpha = topBarBlurTintAlpha.floatValue),
-            )
-        ),
+        blurTintAlpha = if (MiuixTheme.colorScheme.surface.luminance() >= 0.5f) blurTintAlphaLight.floatValue else blurTintAlphaDark.floatValue,
         adjustPadding = adjustPadding,
-        fixedBackgroundColor = topAppBarBackground.copy(
-            if (topBarBlurState) 0f else 1f
-        ),
         fixedContent = fixedContent
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
-                .overScrollVertical()
-                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .fillMaxHeight()
                 .scrollEndHaptic()
-                .height(getWindowSize().height.dp)
-                .background(MiuixTheme.colorScheme.background),
+                .overScrollVertical()
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
             state = listState,
             contentPadding = paddingValues,
-            content = content
+            content = content,
         )
     }
 }

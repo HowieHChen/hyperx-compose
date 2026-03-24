@@ -1,5 +1,6 @@
 package dev.lackluster.hyperx.compose.component
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,7 +23,6 @@ import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.theme.MiuixTheme
-import top.yukonga.miuix.kmp.utils.BackHandler
 
 @Composable
 fun FullScreenDialog(
@@ -30,8 +30,8 @@ fun FullScreenDialog(
     adjustPadding: PaddingValues,
     title: String,
     blurEnabled: MutableState<Boolean> = mutableStateOf(true),
-    blurTintAlphaLight: MutableFloatState = mutableFloatStateOf(0.6f),
-    blurTintAlphaDark: MutableFloatState = mutableFloatStateOf(0.5f),
+    blurTintAlphaLight: MutableFloatState = mutableFloatStateOf(0.8f),
+    blurTintAlphaDark: MutableFloatState = mutableFloatStateOf(0.7f),
     mode: BasePageDefaults.Mode = BasePageDefaults.Mode.FULL,
     onNegativeButton: (() -> Unit)? = {
         navController.popBackStack()
@@ -49,13 +49,13 @@ fun FullScreenDialog(
     }
 
     BasePage(
-        navController,
-        adjustPadding,
-        title,
-        blurEnabled,
-        blurTintAlphaLight,
-        blurTintAlphaDark,
-        mode,
+        navController = navController,
+        adjustPadding = adjustPadding,
+        title = title,
+        blurEnabled = blurEnabled,
+        mode = mode,
+        blurTintAlphaLight = blurTintAlphaLight,
+        blurTintAlphaDark = blurTintAlphaDark,
         navigationIcon = { padding ->
             IconButton(
                 modifier = Modifier

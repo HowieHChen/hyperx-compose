@@ -17,12 +17,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import dev.chrisbanes.haze.ExperimentalHazeApi
+import dev.chrisbanes.haze.HazeInputScale
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.HazeTint
@@ -32,6 +33,7 @@ import top.yukonga.miuix.kmp.basic.FabPosition
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 
+@OptIn(ExperimentalHazeApi::class)
 @Composable
 fun HazeScaffold(
     modifier: Modifier = Modifier,
@@ -40,17 +42,15 @@ fun HazeScaffold(
     floatingActionButton: @Composable () -> Unit = {},
     floatingActionButtonPosition: FabPosition = FabPosition.End,
     snackbarHost: @Composable () -> Unit = {},
-    containerColor: Color = MiuixTheme.colorScheme.background,
+    containerColor: Color = MiuixTheme.colorScheme.surface,
     contentWindowInsets: WindowInsets = WindowInsets.systemBars.only(WindowInsetsSides.Vertical),
     blurTopBar: Boolean = false,
     blurBottomBar: Boolean = false,
+    blurTintAlpha: Float = 0.8f,
     hazeState: HazeState = remember { HazeState() },
     hazeStyle: HazeStyle = HazeStyle(
-        blurRadius = 66.dp,
         backgroundColor = containerColor,
-        tint = HazeTint(
-            containerColor.copy(alpha = if (containerColor.luminance() >= 0.5) 0.85f else 0.75f),
-        ),
+        tint = HazeTint(containerColor.copy(blurTintAlpha))
     ),
     adjustPadding: PaddingValues = PaddingValues(0.dp),
     fixedBackgroundColor: Color = containerColor,
@@ -70,7 +70,12 @@ fun HazeScaffold(
             topBar?.let {
                 if (blurTopBar) {
                     Box(
-                        modifier = Modifier.hazeEffect(state = hazeState, style = hazeStyle)
+                        modifier = Modifier.hazeEffect(state = hazeState, style = hazeStyle) {
+                            blurRadius = 20.dp
+                            inputScale = HazeInputScale.Fixed(0.35f)
+                            noiseFactor = 0f
+                            forceInvalidateOnPreDraw = false
+                        },
                     ) {
                         it(adjustPadding)
                     }
@@ -83,7 +88,12 @@ fun HazeScaffold(
             bottomBar?.let {
                 if (blurBottomBar) {
                     Box(
-                        modifier = Modifier.hazeEffect(state = hazeState, style = hazeStyle),
+                        modifier = Modifier.hazeEffect(state = hazeState, style = hazeStyle) {
+                            blurRadius = 20.dp
+                            inputScale = HazeInputScale.Fixed(0.35f)
+                            noiseFactor = 0f
+                            forceInvalidateOnPreDraw = false
+                        },
                     ) {
                         it(adjustPadding)
                     }
@@ -95,12 +105,12 @@ fun HazeScaffold(
         floatingActionButton = floatingActionButton,
         floatingActionButtonPosition = floatingActionButtonPosition,
         snackbarHost = snackbarHost,
-        popupHost = {},
         containerColor = containerColor,
         contentWindowInsets = contentWindowInsets,
     ) { contentPadding ->
         Box(
-            Modifier.hazeSource(state = hazeState)
+            Modifier
+                .hazeSource(state = hazeState)
         ) {
             content(
                 PaddingValues(
@@ -120,7 +130,12 @@ fun HazeScaffold(
         fixedContent?.let {
             Box(
                 modifier = if (blurTopBar) {
-                    Modifier.hazeEffect(state = hazeState, style = hazeStyle)
+                    Modifier.hazeEffect(state = hazeState, style = hazeStyle) {
+                        blurRadius = 20.dp
+                        inputScale = HazeInputScale.Fixed(0.35f)
+                        noiseFactor = 0f
+                        forceInvalidateOnPreDraw = false
+                    }
                 } else {
                     Modifier
                 }
